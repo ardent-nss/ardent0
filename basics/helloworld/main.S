@@ -8,7 +8,7 @@
 
 main:
   MOV R7, #0 @ initialize counter to 0
-  BL stdio_init_all # initialize UART or USB
+  BL stdio_init_all @ initialize UART or USB
 loop:
   LDR R0, =helloworld @ load address of string
   ADD R7, #1 @ increment counter
