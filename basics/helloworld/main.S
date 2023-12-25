@@ -15,7 +15,7 @@ loop:
   MOV R1, R7 @ move the counter to second parameter
   BL printf @ call pico_printf
   B loop @ loop forever
+
 .data
 .align 4 @ necessary alignment
-
 helloworld: .asciz "Hello World %d\n"
