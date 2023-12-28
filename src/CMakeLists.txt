@@ -20,4 +20,4 @@ pico_enable_stdio_usb(a0_bl 0)
 
 pico_add_extra_outputs(a0_bl)
 
-target_link_libraries(a0_bl pico_stdlib)
+target_link_libraries(a0_bl pico_stdlib pico_multicore)
