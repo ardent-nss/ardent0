@@ -24,14 +24,14 @@ void core1() {
   //bool *console_free = &console_free;
   uint64_t counter1 = 0;
   while(true) {
-    while(console_free = 0) {;;}
+    //while(console_free = 0) {;;}
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-    console_free = 0;
+    //console_free = 0;
     printf("\033[1;92mCPU1:\033[0m Hello world! %lld\n", counter1);
-    console_free = 1;
+    //console_free = 1;
     counter1++;
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-    sleep_us(50000);
+    //sleep_us(50000);
   }
 }
 
@@ -63,14 +63,14 @@ int main() {
   //bool *console_free = &console_free;
   uint64_t counter0 = 0;
   while(true) {
-    while(console_free = 0) {;;}
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-    console_free = 0;
+    //while(console_free = 0) {;;}
+    //cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    //console_free = 0;
     printf("\033[1;91mCPU0:\033[0m Hello world! %lld\n", counter0);
-    console_free = 1;
+    //console_free = 1;
     counter0++;
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-    sleep_us(50000);
+    //cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+    //sleep_us(50000);
   }
 
   return 0;
