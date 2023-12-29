@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "pico/stdlib.h"
 #include "pico/binary_info.h"
-#include "pico/cyw43_arch.h"
+#include "pico/cyw43_arch.h"nn
 #include "pico/multicore.h"
 
 #define FLAG_VALUE 123
