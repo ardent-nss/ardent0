@@ -2,10 +2,20 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "pico/stdlib.h"
+#include "pico/multicore.h"
 #include "pico/binary_info.h"
 #include "pico/cyw43_arch.h"
 #include "hardware/gpio.h"
-#include "pico/multicore.h"
+#include "hardware/uart.h"
+
+#define UART_ID uart0
+#define BAUD_RATE 921600
+#define DATA_BITS 8
+#define STOP_BITS 1
+#define PARITY UART_PARITY_NONE
+
+#define UART_TX_PIN 0
+#define UART_RX_PIN 1
 
 #define FLAG_VALUE 123
 const uint LED_CPU0 = 9;
@@ -26,7 +36,7 @@ void core1() {
   while(true) {
     gpio_put(LED_CPU1, 1);
 
-    printf("\033[1;92mCPU1:\033[0m Hello world! %lld\n", counter1);
+    //printf("\033[1;92mCPU1:\033[0m Hello world! %lld\n", counter1);
 
     counter1++;
     gpio_put(LED_CPU1, 0);
@@ -37,10 +47,19 @@ void core1() {
 int main() {
   set_sys_clock_khz(250000, true);
   stdio_init_all();
-  printf("\n\n");
-  //bi_decl(bi_program_description("Ardent 0 Bootloader"));
-  //bi_decl(bi_1pin_with_name(LED_STATUS, "Status LED"));
-  //gpio_init(LED_STATUS);
+
+  uart_init(UART_ID, 115200);
+  printf("11500 baud comm right here\n\n");
+  gpio_set_function(UART_TX_PIN, GPIO_FUNC_UART);
+  gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
+
+  int __unused actual = uart_set_baudrate(UART_ID, BAUD_RATE);
+
+  printf("\n\nNew baudrate: %d\n\n", actual);
+  bi_decl(bi_program_description("Ardent 0 Bootloader"));
+  bi_decl(bi_1pin_with_name(LED_CPU0, "CPU0 status LED"));
+  bi_decl(bi_1pin_with_name(LED_CPU1, "CPU1 status LED"));
+
   if (cyw43_arch_init()) {
     printf("\033[41mFATAL:\033[0m Wi-Fi init failed\n");
     return -1;
