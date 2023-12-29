@@ -1,3 +1,6 @@
+# Submodules
+pico-sdk/
+
 # CMake
 CMakeLists.txt.user
 CMakeCache.txt
@@ -23,3 +26,6 @@ bs2_*
 *.hex
 *.uf2
 elf2uf2
+
+# VSCode added stuff (idk)
+src/pioasm/pioasm

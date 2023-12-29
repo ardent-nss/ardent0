@@ -2,9 +2,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "pico/stdlib.h"
+#include "pico/binary_info.h"
+#include "pico/cyw43_arch.h"
 #include "pico/multicore.h"
 
 #define FLAG_VALUE 123
+//const short int LED_STATUS = 25;
 short int console_free = 1;
 
 void core1() {
@@ -18,19 +21,31 @@ void core1() {
 
   printf("\033[1;92mCPU1:\033[0m Hey there!\n");
 
-  // uint64_t counter1 = 0;
-  // while(true) {
-  //   while(console_free != 1) {;;}
-  //   console_free = 0;
-  //   printf("\033[1;92mCPU1:\033[0m Hello world! %lld\n", counter1);
-  //   console_free = 1;
-  //   counter1++;
-  // }
+  //bool *console_free = &console_free;
+  uint64_t counter1 = 0;
+  while(true) {
+    while(console_free = 0) {;;}
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    console_free = 0;
+    printf("\033[1;92mCPU1:\033[0m Hello world! %lld\n", counter1);
+    console_free = 1;
+    sleep_us(1);
+    counter1++;
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+  }
 }
 
 int main() {
+  set_sys_clock_khz(250000, true);
   stdio_init_all();
-  printf("\n\nTHIS IS A SCAAAAM\n\n");
+  printf("\n\n");
+  //bi_decl(bi_program_description("Ardent 0 Bootloader"));
+  //bi_decl(bi_1pin_with_name(LED_STATUS, "Status LED"));
+  //gpio_init(LED_STATUS);
+  if (cyw43_arch_init()) {
+    printf("\033[41mFATAL:\033[0m Wi-Fi init failed\n");
+    return -1;
+  }
 
   printf("\033[1;105mSETUP:\033[0m Initializing core 1...\n");
   multicore_launch_core1(core1);
@@ -45,14 +60,18 @@ int main() {
 
   printf("\033[1;91mCPU0:\033[0m Hiya!\n");
 
-  // uint64_t counter0 = 0;
-  // while(true) {
-  //   while(console_free != 1) {;;}
-  //   console_free = 0;
-  //   printf("\033[1;91mCPU0:\033[0m Hello world! %lld\n", counter0);
-  //   console_free = 1;
-  //   counter0++;
-  // }
+  //bool *console_free = &console_free;
+  uint64_t counter0 = 0;
+  while(true) {
+    while(console_free = 0) {;;}
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    console_free = 0;
+    printf("\033[1;91mCPU0:\033[0m Hello world! %lld\n", counter0);
+    console_free = 1;
+    sleep_us(1);
+    counter0++;
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+  }
 
   return 0;
 }
