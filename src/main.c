@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "pico/stdlib.h"
 #include "pico/binary_info.h"
-#include "pico/cyw43_arch.h"nn
+#include "pico/cyw43_arch.h"
 #include "pico/multicore.h"
 
 #define FLAG_VALUE 123
@@ -29,9 +29,9 @@ void core1() {
     console_free = 0;
     printf("\033[1;92mCPU1:\033[0m Hello world! %lld\n", counter1);
     console_free = 1;
-    sleep_us(1);
     counter1++;
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+    sleep_us(50000);
   }
 }
 
@@ -68,9 +68,9 @@ int main() {
     console_free = 0;
     printf("\033[1;91mCPU0:\033[0m Hello world! %lld\n", counter0);
     console_free = 1;
-    sleep_us(1);
     counter0++;
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+    sleep_us(50000);
   }
 
   return 0;
