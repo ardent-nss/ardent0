@@ -4,10 +4,12 @@
 #include "pico/stdlib.h"
 #include "pico/binary_info.h"
 #include "pico/cyw43_arch.h"
+#include "hardware/gpio.h"
 #include "pico/multicore.h"
 
 #define FLAG_VALUE 123
-//const short int LED_STATUS = 25;
+const uint LED_CPU0 = 5;
+const uint LED_CPU1 = 9;
 short int console_free = 1;
 
 void core1() {
@@ -25,12 +27,14 @@ void core1() {
   uint64_t counter1 = 0;
   while(true) {
     //while(console_free = 0) {;;}
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    //cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    //gpio_put(LED_CPU1, 1);
     //console_free = 0;
     printf("\033[1;92mCPU1:\033[0m Hello world! %lld\n", counter1);
     //console_free = 1;
     counter1++;
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+    //cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+    //gpio_put(LED_CPU1, 0);
     //sleep_us(50000);
   }
 }
@@ -46,6 +50,10 @@ int main() {
     printf("\033[41mFATAL:\033[0m Wi-Fi init failed\n");
     return -1;
   }
+
+  gpio_init(5);
+  gpio_set_dir(LED_CPU0, GPIO_OUT);
+  gpio_put(5, GPIO_OUT);
 
   printf("\033[1;105mSETUP:\033[0m Initializing core 1...\n");
   multicore_launch_core1(core1);
@@ -65,11 +73,13 @@ int main() {
   while(true) {
     //while(console_free = 0) {;;}
     //cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    //gpio_put(LED_CPU0, 1);
     //console_free = 0;
     printf("\033[1;91mCPU0:\033[0m Hello world! %lld\n", counter0);
     //console_free = 1;
     counter0++;
     //cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+    //gpio_put(LED_CPU0, 0);
     //sleep_us(50000);
   }
 
