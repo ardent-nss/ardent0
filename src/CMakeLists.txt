@@ -7,6 +7,8 @@ project(a0_bl C CXX ASM)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_C_FLAGS "-Oz -mcpu=cortex-m0plus -mtune=cortex-m0plus")
+
 set(PICO_BOARD pico_w) # Ardent 0 is based on the Pico W.
 
 pico_sdk_init()
